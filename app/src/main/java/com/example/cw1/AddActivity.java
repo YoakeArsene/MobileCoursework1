@@ -1,19 +1,18 @@
 package com.example.cw1;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.DialogFragment;
-import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
+
 import java.time.LocalDate;
-import java.util.Calendar;
 
 
 public class AddActivity extends AppCompatActivity {
@@ -34,35 +33,30 @@ public class AddActivity extends AppCompatActivity {
         description_input = findViewById(R.id.description_input);
         add_button = findViewById(R.id.add_button);
 
-        add_button.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View view)
-            {
+        add_button.setOnClickListener(view -> {
 
-                int radioId = radioGroup.getCheckedRadioButtonId();
-                rb = findViewById(radioId);
-                if (name_input.getText().toString().trim().isEmpty() ||
-                        destination_input.getText().toString().trim().isEmpty() ||
-                        selectDate.getText().toString().trim().isEmpty() ||
-                        rb.getText().toString().trim().isEmpty() ||
-                        description_input.getText().toString().trim().isEmpty()){
-                    Toast.makeText(AddActivity.this, "Please fill all required fields", Toast.LENGTH_SHORT).show();
-                }
-                else{
-                    Toast.makeText(AddActivity.this, name_input.getText().toString() +
-                                    destination_input.getText().toString() +
-                                    selectDate.getText().toString() +
-                                    rb.getText().toString() +
-                                    description_input.getText().toString(),
-                            Toast.LENGTH_SHORT).show();
-                    MyDatabaseHelper DB = new MyDatabaseHelper(AddActivity.this);
-                    DB.addTrip(name_input.getText().toString().trim(),
-                            destination_input.getText().toString().trim(),
-                            selectDate.getText().toString().trim(),
-                            rb.getText().toString().trim(),
-                            description_input.getText().toString().trim());
-                }
+            int radioId = radioGroup.getCheckedRadioButtonId();
+            rb = findViewById(radioId);
+            if (name_input.getText().toString().trim().isEmpty() ||
+                    destination_input.getText().toString().trim().isEmpty() ||
+                    selectDate.getText().toString().trim().isEmpty() ||
+                    rb.getText().toString().trim().isEmpty() ||
+                    description_input.getText().toString().trim().isEmpty()){
+                Toast.makeText(AddActivity.this, "Please fill all required fields", Toast.LENGTH_SHORT).show();
+            }
+            else{
+                Toast.makeText(AddActivity.this, name_input.getText().toString() +
+                                destination_input.getText().toString() +
+                                selectDate.getText().toString() +
+                                rb.getText().toString() +
+                                description_input.getText().toString(),
+                        Toast.LENGTH_SHORT).show();
+                MyDatabaseHelper DB = new MyDatabaseHelper(AddActivity.this);
+                DB.addTrip(name_input.getText().toString().trim(),
+                        destination_input.getText().toString().trim(),
+                        selectDate.getText().toString().trim(),
+                        rb.getText().toString().trim(),
+                        description_input.getText().toString().trim());
             }
         });
     }

@@ -1,7 +1,6 @@
 package com.example.cw1;
 
-import android.content.Context;
-import android.content.DialogInterface;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -13,8 +12,8 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.Toolbar;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
@@ -46,47 +45,40 @@ public class UpdateActivity extends AppCompatActivity {
         builder =  new AlertDialog.Builder(this);
         getAndSetIntentData();
 
-        update_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                MyDatabaseHelper db = new MyDatabaseHelper(UpdateActivity.this);
-                name = name_input.getText().toString().trim();
-                destination = destination_input.getText().toString().trim();
-                date = selectDate.getText().toString().trim();
-                int btnId = radioGroup.getCheckedRadioButtonId();
-                rb = findViewById(btnId);
-                risk = rb.getText().toString().trim();
-                desc = description_input.getText().toString().trim();
+        update_button.setOnClickListener(view -> {
+            MyDatabaseHelper db = new MyDatabaseHelper(UpdateActivity.this);
+            name = name_input.getText().toString().trim();
+            destination = destination_input.getText().toString().trim();
+            date = selectDate.getText().toString().trim();
+            int btnId = radioGroup.getCheckedRadioButtonId();
+            rb = findViewById(btnId);
+            risk = rb.getText().toString().trim();
+            desc = description_input.getText().toString().trim();
 
-                db.updateTrip(id, name, destination, date, risk, desc);
-            }
+            db.updateTrip(id, name, destination, date, risk, desc);
         });
 
-        see_expense_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(UpdateActivity.this, ExpensesActivity.class);
-                intent.putExtra("trip_id", String.valueOf(id));
-                startActivity(intent);
-            }
+        see_expense_button.setOnClickListener(view -> {
+            Intent intent = new Intent(UpdateActivity.this, ExpensesActivity.class);
+            intent.putExtra("trip_id", String.valueOf(id));
+            startActivity(intent);
         });
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu(@NonNull Menu menu) {
         getMenuInflater().inflate(R.menu.menu_update, menu);
         return true;
     }
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.delete_button:
-                deleteTrip();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+        if (item.getItemId() == R.id.delete_button) {
+            deleteTrip();
+            return true;
         }
+        return super.onOptionsItemSelected(item);
     }
 
     public void showDatePickerDialog(View v){
@@ -114,18 +106,15 @@ public class UpdateActivity extends AppCompatActivity {
             risk = getIntent().getStringExtra("risk");
             desc = getIntent().getStringExtra("desc");
 
-            if (risk.toString() == "Yes"){
-                RadioButton rYes = findViewById(R.id.radioButtonYes);
-                RadioButton rNo = findViewById(R.id.radioButtonNo);
+            RadioButton rYes = findViewById(R.id.radioButtonYes);
+            RadioButton rNo = findViewById(R.id.radioButtonNo);
+            if (risk.equals("Yes")){
                 rYes.setChecked(true);
                 rNo.setChecked(false);
             } else {
-                RadioButton rYes = findViewById(R.id.radioButtonYes);
-                RadioButton rNo = findViewById(R.id.radioButtonNo);
                 rYes.setChecked(false);
                 rNo.setChecked(true);
             }
-            // Display the data to UpdateActivity
             name_input.setText(name);
             destination_input.setText(destination);
             selectDate.setText(date);
@@ -140,19 +129,13 @@ public class UpdateActivity extends AppCompatActivity {
         builder.setTitle("Delete " + name + "?");
         builder.setMessage("Are you sure?");
 
-        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                MyDatabaseHelper databaseHelper = new MyDatabaseHelper(UpdateActivity.this);
-                databaseHelper.deleteOneRow(id);
-                finish();
-            }
+        builder.setPositiveButton("Yes", (dialogInterface, i) -> {
+            MyDatabaseHelper databaseHelper = new MyDatabaseHelper(UpdateActivity.this);
+            databaseHelper.deleteOneRow(id);
+            finish();
         });
 
-        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-            }
+        builder.setNegativeButton("No", (dialogInterface, i) -> {
         });
 
         builder.create().show();

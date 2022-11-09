@@ -1,16 +1,14 @@
 package com.example.cw1;
 
+import android.content.Intent;
+import android.database.Cursor;
+import android.os.Bundle;
+import android.widget.Toast;
+
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.app.Activity;
-import android.content.Intent;
-import android.database.Cursor;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -21,7 +19,6 @@ public class ExpensesActivity extends AppCompatActivity {
     RecyclerView expenseRecyclerView;
     FloatingActionButton add_expense_button;
     String tripId;
-    Activity activity;
     MyDatabaseHelper db;
     ArrayList<String> expense_id, trip_id, expense_type, expense_amount, expense_time, expense_comment;
     ExpenseCustomAdapter customAdapter;
@@ -34,13 +31,10 @@ public class ExpensesActivity extends AppCompatActivity {
         expenseRecyclerView = findViewById(R.id.expenseRecyclerView);
         add_expense_button = findViewById(R.id.add_expense_button);
 
-        add_expense_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(ExpensesActivity.this, AddExpenseActivity.class);
-                intent.putExtra("trip_id", tripId);
-                startActivityForResult(intent, 1);
-            }
+        add_expense_button.setOnClickListener(view -> {
+            Intent intent = new Intent(ExpensesActivity.this, AddExpenseActivity.class);
+            intent.putExtra("trip_id", tripId);
+            startActivityForResult(intent, 1);
         });
 
         db = new MyDatabaseHelper(ExpensesActivity.this);
@@ -56,11 +50,9 @@ public class ExpensesActivity extends AppCompatActivity {
         customAdapter = new ExpenseCustomAdapter(ExpensesActivity.this,
                 this,
                 expense_id,
-                trip_id,
                 expense_type,
                 expense_amount,
                 expense_time,
-                expense_comment,
                 String.valueOf(tripId));
 
         expenseRecyclerView.setAdapter(customAdapter);

@@ -16,19 +16,24 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHolder> {
-    private Context context;
+    private final Context context;
     Activity activity;
-    private ArrayList tripId, tripName, tripDestination, tripDate, tripRisk, tripDesc;
+    private final ArrayList<String> tripId;
+    private final ArrayList<String> tripName;
+    private final ArrayList<String> tripDestination;
+    private final ArrayList<String> tripDate;
+    private final ArrayList<String> tripRisk;
+    private final ArrayList<String> tripDesc;
     int position;
 
     public CustomAdapter(Context context,
                          Activity activity,
-                         ArrayList tripId,
-                         ArrayList tripName,
-                         ArrayList tripDestination,
-                         ArrayList tripDate,
-                         ArrayList tripRisk,
-                         ArrayList tripDesc){
+                         ArrayList<String> tripId,
+                         ArrayList<String> tripName,
+                         ArrayList<String> tripDestination,
+                         ArrayList<String> tripDate,
+                         ArrayList<String> tripRisk,
+                         ArrayList<String> tripDesc){
         this.context = context;
         this.activity = activity;
         this.tripId = tripId;
@@ -56,19 +61,16 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
         holder.trip_date_text.setText(String.valueOf(tripDate.get(position)));
         holder.trip_risk_text.setText(String.valueOf(tripRisk.get(position)));
 
-        holder.mainLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(context, UpdateActivity.class);
+        holder.mainLayout.setOnClickListener(view -> {
+            Intent intent = new Intent(context, UpdateActivity.class);
 
-                intent.putExtra("id", String.valueOf(tripId.get(position)));
-                intent.putExtra("name", String.valueOf(tripName.get(position)));
-                intent.putExtra("destination", String.valueOf(tripDestination.get(position)));
-                intent.putExtra("date", String.valueOf(tripDate.get(position)));
-                intent.putExtra("risk", String.valueOf(tripRisk.get(position)));
-                intent.putExtra("desc", String.valueOf(tripDesc.get(position)));
-                  activity.startActivityForResult(intent, 1);
-            }
+            intent.putExtra("id", String.valueOf(tripId.get(position)));
+            intent.putExtra("name", String.valueOf(tripName.get(position)));
+            intent.putExtra("destination", String.valueOf(tripDestination.get(position)));
+            intent.putExtra("date", String.valueOf(tripDate.get(position)));
+            intent.putExtra("risk", String.valueOf(tripRisk.get(position)));
+            intent.putExtra("desc", String.valueOf(tripDesc.get(position)));
+              activity.startActivityForResult(intent, 1);
         });
     }
 
@@ -77,7 +79,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
         return tripId.size();
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder {
+    public static class MyViewHolder extends RecyclerView.ViewHolder {
         TextView trip_id_text, trip_name_text, trip_destination_text, trip_date_text, trip_risk_text;
         LinearLayout mainLayout;
 

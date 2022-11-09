@@ -6,7 +6,6 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -16,7 +15,7 @@ import java.util.ArrayList;
 
 public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.MyViewHolder> {
 
-    private Context context;
+    private final Context context;
     Activity activity;
     ArrayList<String> tripId, tripName, tripDestination, tripDate, tripRisk, tripDesc;
     int position;
@@ -45,7 +44,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.MyViewHold
     public SearchAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.search_row, parent, false);
-        return new SearchAdapter.MyViewHolder(view);
+        return new MyViewHolder(view);
     }
 
     @Override
@@ -56,14 +55,14 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.MyViewHold
         holder.trip_destination_text.setText(String.valueOf(tripDestination.get(position)));
         holder.trip_date_text.setText(String.valueOf(tripDate.get(position)));
 
-        String a = "";
+        String a;
         if (String.valueOf(tripRisk.get(position)).equals("1")) {
             a = "yes";
         } else {
             a = "no";
         }
-        a = "Risk Assessement: " + a;
-        holder.trip_requireAssessement_text.setText(a);
+        a = "Risk Assessment: " + a;
+        holder.trip_risk_text.setText(a);
     }
 
     @Override
@@ -71,8 +70,8 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.MyViewHold
         return tripId.size();
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder {
-        TextView trip_id_text, trip_name_text, trip_destination_text, trip_date_text, trip_requireAssessement_text;
+    public static class MyViewHolder extends RecyclerView.ViewHolder {
+        TextView trip_id_text, trip_name_text, trip_destination_text, trip_date_text, trip_risk_text;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -80,7 +79,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.MyViewHold
             trip_name_text = itemView.findViewById(R.id.trip_name_text);
             trip_destination_text = itemView.findViewById(R.id.trip_destination_text);
             trip_date_text = itemView.findViewById(R.id.trip_date_text);
-            trip_requireAssessement_text = itemView.findViewById(R.id.trip_risk_text);
+            trip_risk_text = itemView.findViewById(R.id.trip_risk_text);
         }
     }
 }

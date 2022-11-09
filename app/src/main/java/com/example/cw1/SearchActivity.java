@@ -1,10 +1,7 @@
 package com.example.cw1;
 
-import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.view.MenuItem;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -13,17 +10,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.cw1.MyDatabaseHelper;
-import com.example.cw1.R;
-import com.example.cw1.SearchAdapter;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.navigation.NavigationBarView;
-
 import java.util.ArrayList;
 
 public class SearchActivity extends AppCompatActivity {
 
-    BottomNavigationView bottomNavigationView;
     Button searchButton;
     MyDatabaseHelper db = new MyDatabaseHelper(SearchActivity.this);
     SearchAdapter searchTripAdapter;
@@ -39,22 +29,19 @@ public class SearchActivity extends AppCompatActivity {
         searchRecycleView = findViewById(R.id.searchRecyclerView);
 
         searchButton = findViewById(R.id.search_trip_button);
-        searchButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        searchButton.setOnClickListener(view -> {
 
-                db = new MyDatabaseHelper(SearchActivity.this);
-                trip_id = new ArrayList<>();
-                trip_name = new ArrayList<>();
-                trip_destination = new ArrayList<>();
-                trip_date = new ArrayList<>();
-                trip_risk = new ArrayList<>();
-                trip_desc = new ArrayList<>();
+            db = new MyDatabaseHelper(SearchActivity.this);
+            trip_id = new ArrayList<>();
+            trip_name = new ArrayList<>();
+            trip_destination = new ArrayList<>();
+            trip_date = new ArrayList<>();
+            trip_risk = new ArrayList<>();
+            trip_desc = new ArrayList<>();
 
-                search_input = findViewById(R.id.search_input);
-                StoreSearchTrip(search_input.getText().toString());
+            search_input = findViewById(R.id.search_input);
+            StoreSearchTrip(search_input.getText().toString());
 
-            }
         });
     }
 

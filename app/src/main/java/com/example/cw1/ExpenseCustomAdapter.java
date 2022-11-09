@@ -14,29 +14,28 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 public class ExpenseCustomAdapter extends RecyclerView.Adapter<ExpenseCustomAdapter.MyViewHolder> {
-    private Context context;
+    private final Context context;
     Activity activity;
-    private ArrayList expenseId, tripId, expenseType, expenseAmount, expenseTime, expenseComment;
+    private final ArrayList<String> expenseId;
+    private final ArrayList<String> expenseType;
+    private final ArrayList<String> expenseAmount;
+    private final ArrayList<String> expenseTime;
     int position;
     String expenseTripId;
 
     public ExpenseCustomAdapter(Context context,
-                         Activity activity,
-                         ArrayList expenseId,
-                         ArrayList tripId,
-                         ArrayList expenseType,
-                         ArrayList expenseAmount,
-                         ArrayList expenseTime,
-                         ArrayList expenseComment,
-                         String expenseTripId){
+                                Activity activity,
+                                ArrayList<String> expenseId,
+                                ArrayList<String> expenseType,
+                                ArrayList<String> expenseAmount,
+                                ArrayList<String> expenseTime,
+                                String expenseTripId){
         this.context = context;
         this.activity = activity;
         this.expenseId = expenseId;
-        this.tripId = tripId;
         this.expenseType = expenseType;
         this.expenseAmount = expenseAmount;
         this.expenseTime = expenseTime;
-        this.expenseComment = expenseComment;
         this.expenseTripId = expenseTripId;
     }
 
@@ -61,7 +60,7 @@ public class ExpenseCustomAdapter extends RecyclerView.Adapter<ExpenseCustomAdap
         return expenseId.size();
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder {
+    public static class MyViewHolder extends RecyclerView.ViewHolder {
         TextView expense_type_text, expense_time_text, expense_amount_text;
 
         public MyViewHolder(@NonNull View itemView) {
